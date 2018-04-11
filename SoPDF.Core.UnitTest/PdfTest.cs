@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace SoPDF.Core.UnitTest
 {
@@ -9,7 +10,7 @@ namespace SoPDF.Core.UnitTest
         public void Test()
         {
             PdfDocument document = new PdfDocument("Hello World!");
-            document.Save(@"D:\test.pdf");
+            document.Save("test.pdf");
         }
     }
 }

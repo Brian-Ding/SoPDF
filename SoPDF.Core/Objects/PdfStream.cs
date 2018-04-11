@@ -15,26 +15,28 @@ namespace SoPDF.Core.Objects
             _content = content;
         }
 
-        public override byte[] ToPDF()
+        public override String ToPDF()
         {
             String stream = String.Empty;
             stream += "BT" + "\n";
             stream += "/F0 36 Tf" + "\n";
             stream += "50 706 Td" + "\n";
             stream += "(" + _content + ") Tj" + "\n";
-            stream += "ET" + "\n";
+            stream += "ET " + "\n";
 
 
             String pdf = String.Empty;
 
-            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + "obj" + "\n";
-            pdf += "<< /Length " + Encoding.UTF8.GetBytes(stream).Length.ToString() + "\n";
+            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + " obj " + "\n";
+            pdf += "<<" + "\n";
+            pdf += "/Length " + stream.Length.ToString() + "\n";
             pdf += ">>" + "\n";
             pdf += "stream" + "\n";
-            pdf += "endstream" + "\n";
-            pdf += "endobj" + "\n";
+            pdf += stream;
+            pdf += "endstream " + "\n";
+            pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(stream);
+            return pdf;
         }
     }
 }

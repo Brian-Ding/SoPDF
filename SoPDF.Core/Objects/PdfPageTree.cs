@@ -15,15 +15,14 @@ namespace SoPDF.Core.Objects
             _pages = new List<PdfPage>();
         }
 
-        public override byte[] ToPDF()
+        public override String ToPDF()
         {
             String pdf = String.Empty;
 
-            pdf += pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + "obj" + "\n";
-            pdf += "<< /Type /pages" + "\n";
-            pdf += "/Count " + _pages.Count.ToString() + "\n";
-            pdf += "/Kids [";
+            pdf += pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + " obj " + "\n";
+            pdf += "<<" + "\n";
 
+            pdf += "/Kids [";
             String pagesStr = String.Empty;
             foreach (PdfPage page in _pages)
             {
@@ -32,10 +31,14 @@ namespace SoPDF.Core.Objects
             pdf += pagesStr.TrimEnd(' ');
             pdf += "]" + "\n";
 
-            pdf += ">>" + "\n";
-            pdf += "endobj" + "\n";
+            pdf += "/Count " + _pages.Count.ToString() + "\n";
+            pdf += "/Type /Pages" + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+
+            pdf += ">>" + "\n";
+            pdf += "endobj " + "\n";
+
+            return pdf;
         }
 
         public void AddPage(PdfPage page)

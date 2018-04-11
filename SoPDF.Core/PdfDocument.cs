@@ -10,18 +10,18 @@ namespace SoPDF.Core
 {
     public class PdfDocument
     {
-        private List<Byte[]> _buffers;
+        private List<String> _buffers;
         private List<Int32> _offsets;
         private Int32 _offset;
 
         public PdfDocument(String content)
         {
             _offset = 0;
-            _buffers = new List<byte[]>();
+            _buffers = new List<String>();
             _offsets = new List<int>();
 
             // header
-            _buffers.Add(Encoding.UTF8.GetBytes("%PDF-1.4\n%âãÏÓ\n"));
+            _buffers.Add("%PDF-1.4\n%âãÏÓ\n");
             _offset += _buffers.Last().Length;
             _offsets.Add(_offset);
 
@@ -52,7 +52,7 @@ namespace SoPDF.Core
             _offset += _buffers.Last().Length;
             _offsets.Add(_offset);
 
-            PdfCatalog catalog = new PdfCatalog(page);
+            PdfCatalog catalog = new PdfCatalog(pageTree);
             _buffers.Add(catalog.ToPDF());
             _offset += _buffers.Last().Length;
 
@@ -61,51 +61,35 @@ namespace SoPDF.Core
             String table = String.Empty;
             table += "xref" + "\n";
             table += "0 " + _buffers.Count.ToString() + "\n";
-            table += "0000000000 65535 f\r\n";
+            table += "0000000000 65535 f \n";
             foreach (var offset in _offsets)
             {
-                table += offset.ToString().PadLeft(10, '0') + " " + "00000" + " " + "n" + "\r\n";
+                table += offset.ToString().PadLeft(10, '0') + " " + "00000" + " " + "n " + "\n";
             }
-            _buffers.Add(Encoding.UTF8.GetBytes(table));
+            _buffers.Add(table);
 
 
             // trailer
             String trailer = String.Empty;
-
+            trailer += "trailer" + "\n" + "\n";
             trailer += "<<" + "\n";
             trailer += "/Root " + catalog.GetRefStr() + "\n";
             trailer += "/Size " + (_buffers.Count - 1).ToString() + "\n";
             trailer += ">>" + "\n";
-            trailer += "endobj" + "\n";
-            _buffers.Add(Encoding.UTF8.GetBytes(trailer));
+            _buffers.Add(trailer);
 
-            _buffers.Add(Encoding.UTF8.GetBytes("startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF"));
+            _buffers.Add("startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF\n");
         }
 
         public void Save(String path)
         {
-            Int32 length = 0;
-            foreach (Byte[] buffer in _buffers)
+            String pdf = String.Empty;
+            foreach (String buffer in _buffers)
             {
-                length += buffer.Length;
+                pdf += buffer;
             }
 
-
-
-            Byte[] pdfBuffer = new Byte[length];
-
-            length = 0;
-            foreach (Byte[] buffer in _buffers)
-            {
-                for (int i = 0; i < buffer.Length; i++)
-                {
-                    pdfBuffer[length + i] = buffer[i];
-                }
-                length += buffer.Length;
-            }
-
-
-            File.WriteAllBytes(path, pdfBuffer);
+            File.WriteAllText(path, pdf);
         }
     }
 }

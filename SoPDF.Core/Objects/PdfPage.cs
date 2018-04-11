@@ -18,16 +18,17 @@ namespace SoPDF.Core.Objects
             _contents = new List<PdfObject>();
         }
 
-        public override Byte[] ToPDF()
+        public override String ToPDF()
         {
             String pdf = String.Empty;
 
-            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + "obj" + "\n";
-            pdf += "<< /Type /Page" + "\n";
-            pdf += "/MediaBox [0 0 " + _pageSize.Width.ToString() + " " + _pageSize.Height.ToString() + "]" + "\n";
+            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + " obj " + "\n";
+            pdf += "<<" + "\n";
+            pdf += "/Parent 1 0 R" + "\n";
             pdf += "/Resources " + _resource.GetRefStr() + "\n";
-            pdf += "/Contents [";
+            pdf += "/MediaBox [0 0 " + _pageSize.Width.ToString() + " " + _pageSize.Height.ToString() + "]" + "\n";
 
+            pdf += "/Contents [";
             String contentsStr = String.Empty;
             foreach (PdfObject pdfObject in _contents)
             {
@@ -36,10 +37,12 @@ namespace SoPDF.Core.Objects
             pdf += contentsStr.TrimEnd(' ');
             pdf += "]" + "\n";
 
-            pdf += ">>" + "\n";
-            pdf += "endobj" + "\n";
+            pdf += "/Type /Page" + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            pdf += ">>" + "\n";
+            pdf += "endobj " + "\n";
+
+            return pdf;
         }
 
         public void AddContent(PdfStream stream)

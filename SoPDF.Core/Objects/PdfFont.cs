@@ -17,22 +17,25 @@ namespace SoPDF.Core.Objects
             _type = "Type1";
         }
 
-        public override byte[] ToPDF()
+        public override String ToPDF()
         {
             String pdf = String.Empty;
 
-            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + "obj" + "\n";
-            pdf += "<< /Font" + "\n";
-            pdf += "<< /F0" + "\n";
-            pdf += "<< /Type /Font" + "\n";
+            pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + " obj " + "\n";
+            pdf += "<<" + "\n";
+            pdf += "/Font " + "\n";
+            pdf += "<<" + "\n";
+            pdf += "/F0 " + "\n";
+            pdf += "<<" + "\n";
             pdf += "/BaseFont /" + _font + "\n";
-            pdf += "/Subtype /" + _type +  "\n";
+            pdf += "/Subtype /" + _type + "\n";
+            pdf += "/Type /Font" + "\n";
             pdf += ">>" + "\n";
             pdf += ">>" + "\n";
             pdf += ">>" + "\n";
-            pdf += "endobj" + "\n";
+            pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            return pdf;
         }
     }
 }
