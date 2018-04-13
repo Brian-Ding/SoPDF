@@ -19,7 +19,7 @@ namespace SoPDF.Core.Objects
             GenerationNum = 0;
         }
 
-        public virtual String ToPDF()
+        public virtual Byte[] ToPDF()
         {
             throw new NotImplementedException();
         }

@@ -18,7 +18,7 @@ namespace SoPDF.Core.Objects
             _contents = new List<PdfObject>();
         }
 
-        public override String ToPDF()
+        public override Byte[] ToPDF()
         {
             String pdf = String.Empty;
 
@@ -42,7 +42,7 @@ namespace SoPDF.Core.Objects
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return pdf;
+            return Encoding.UTF8.GetBytes(pdf);
         }
 
         public void AddContent(PdfStream stream)
