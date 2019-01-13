@@ -13,6 +13,7 @@ namespace SoPDF.Core.Objects
         public Int32 ObjectNum { get; protected set; }
         public Int32 GenerationNum { get; protected set; }
 
+        // this is a constructor
         public PdfObject()
         {
             ObjectNum = ++_objectNum;
