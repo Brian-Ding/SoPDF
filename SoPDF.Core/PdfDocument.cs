@@ -1,4 +1,5 @@
-﻿using SoPDF.Core.Objects;
+
+using SoPDF.Core.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,7 @@ namespace SoPDF.Core
         private Int32 _offset;
 
         // add another test comment
+        // more and more comments
         public PdfDocument(String content)
         {
             //_offset = 0;
