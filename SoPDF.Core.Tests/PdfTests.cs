@@ -1,13 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
+using SoPDF.Core;
 
-namespace SoPDF.Core.UnitTest
+namespace SoPDF.Core.Tests
 {
     [TestClass]
-    public class PdfTest
+    public class PdfTests
     {
         [TestMethod]
-        public void Test()
+        public void TestCreatePdf()
         {
             PdfDocument document = new PdfDocument("Hello World!");
             document.Save("test.pdf");
