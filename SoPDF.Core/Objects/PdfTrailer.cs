@@ -30,16 +30,16 @@ namespace SoPDF.Core.Objects
             return _pdfTrailer;
         }
 
-        internal Byte[] ToPdf()
-        {
-            String pdf = String.Empty;
-            pdf += "trailer" + "\n" + "\n";
-            pdf += "<<" + "\n";
-            pdf += "/Root " + PdfCatalog.GetPdfCatalog().GetRefStr() + "\n";
-            pdf += "/Size " +/* (_buffers.Count - 1).ToString() +*/ "\n";
-            pdf += ">>" + "\n";
-            pdf += "startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF\n";
-        }
+        // internal Byte[] ToPdf()
+        // {
+        //     String pdf = String.Empty;
+        //     pdf += "trailer" + "\n" + "\n";
+        //     pdf += "<<" + "\n";
+        //     pdf += "/Root " + PdfCatalog.GetPdfCatalog().GetRefStr() + "\n";
+        //     pdf += "/Size " +/* (_buffers.Count - 1).ToString() +*/ "\n";
+        //     pdf += ">>" + "\n";
+        //     pdf += "startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF\n";
+        // }
 
         #endregion
     }

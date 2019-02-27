@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoPDF.Core.Objects
 {
-    internal class PdfPageTree : PdfObject
+    public class PdfPageTree : PdfObject
     {
         #region Singleton
 
@@ -38,7 +38,7 @@ namespace SoPDF.Core.Objects
 
         private List<PdfPage> _pages;
 
-        public override Byte[] ToPDF()
+        public override string ToPDF()
         {
             String pdf = String.Empty;
 
@@ -61,7 +61,7 @@ namespace SoPDF.Core.Objects
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            return pdf;
         }
 
         public void AddPage(PdfPage page)

@@ -9,7 +9,7 @@ namespace SoPDF.Core.Tests
         [TestMethod]
         public void TestCreatePdf()
         {
-            PdfDocument document = new PdfDocument("Hello World!");
+            PdfDocument document = new PdfDocument("Hello World! Again!");
             document.Save("test.pdf");
         }
     }

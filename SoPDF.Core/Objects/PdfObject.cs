@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoPDF.Core.Objects
 {
-    internal class PdfObject
+    public class PdfObject
     {
         private static Int32 _objectNum = 0;
 
@@ -20,7 +20,7 @@ namespace SoPDF.Core.Objects
             GenerationNum = 0;
         }
 
-        public virtual Byte[] ToPDF()
+        public virtual string ToPDF()
         {
             throw new NotImplementedException();
         }

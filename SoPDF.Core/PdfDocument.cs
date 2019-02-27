@@ -19,69 +19,69 @@ namespace SoPDF.Core
         // more and more comments
         public PdfDocument(String content)
         {
-            //_offset = 0;
-            //_buffers = new List<String>();
-            //_offsets = new List<int>();
+            _offset = 0;
+            _buffers = new List<String>();
+            _offsets = new List<int>();
 
-            //// header
-            //_buffers.Add("%PDF-1.4\n%âãÏÓ\n");
-            //_offset += _buffers.Last().Length;
-            //_offsets.Add(_offset);
+            // header
+            _buffers.Add("%PDF-1.4\n%âãÏÓ\n");
+            _offset += _buffers.Last().Length;
+            _offsets.Add(_offset);
 
-            //// pages
-            //PdfPageTree pageTree = new PdfPageTree();
+            // pages
+            PdfPageTree pageTree = PdfPageTree.GetPdfPageTree();
 
-            //// page
-            //PdfPage page = new PdfPage();
-            //PdfFont font = new PdfFont();
-            //page.SetFont(font);
-            //PdfStream stream = new PdfStream(content);
-            //page.AddContent(stream);
-            //pageTree.AddPage(page);
+            // page
+            PdfPage page = new PdfPage();
+            PdfFont font = new PdfFont();
+            page.SetFont(font);
+            PdfStream stream = new PdfStream(content);
+            page.AddContent(stream);
+            pageTree.AddPage(page);
 
-            //_buffers.Add(pageTree.ToPDF());
-            //_offset += _buffers.Last().Length;
-            //_offsets.Add(_offset);
+            _buffers.Add(pageTree.ToPDF());
+            _offset += _buffers.Last().Length;
+            _offsets.Add(_offset);
 
-            //_buffers.Add(page.ToPDF());
-            //_offset += _buffers.Last().Length;
-            //_offsets.Add(_offset);
+            _buffers.Add(page.ToPDF());
+            _offset += _buffers.Last().Length;
+            _offsets.Add(_offset);
 
-            //_buffers.Add(font.ToPDF());
-            //_offset += _buffers.Last().Length;
-            //_offsets.Add(_offset);
+            _buffers.Add(font.ToPDF());
+            _offset += _buffers.Last().Length;
+            _offsets.Add(_offset);
 
-            //_buffers.Add(stream.ToPDF());
-            //_offset += _buffers.Last().Length;
-            //_offsets.Add(_offset);
+            _buffers.Add(stream.ToPDF());
+            _offset += _buffers.Last().Length;
+            _offsets.Add(_offset);
 
-            //PdfCatalog catalog = new PdfCatalog(pageTree);
-            //_buffers.Add(catalog.ToPDF());
-            //_offset += _buffers.Last().Length;
-
-
-            //// x ref table
-            //String table = String.Empty;
-            //table += "xref" + "\n";
-            //table += "0 " + _buffers.Count.ToString() + "\n";
-            //table += "0000000000 65535 f \n";
-            //foreach (var offset in _offsets)
-            //{
-            //    table += offset.ToString().PadLeft(10, '0') + " " + "00000" + " " + "n " + "\n";
-            //}
-            //_buffers.Add(table);
+            PdfCatalog catalog =PdfCatalog.GetPdfCatalog();
+            _buffers.Add(catalog.ToPDF());
+            _offset += _buffers.Last().Length;
 
 
-            //// trailer
-            //String trailer = String.Empty;
-            //trailer += "trailer" + "\n" + "\n";
-            //trailer += "<<" + "\n";
-            //trailer += "/Root " + catalog.GetRefStr() + "\n";
-            //trailer += "/Size " + (_buffers.Count - 1).ToString() + "\n";
-            //trailer += ">>" + "\n";
-            //_buffers.Add(trailer);
+            // x ref table
+            String table = String.Empty;
+            table += "xref" + "\n";
+            table += "0 " + _buffers.Count.ToString() + "\n";
+            table += "0000000000 65535 f \n";
+            foreach (var offset in _offsets)
+            {
+               table += offset.ToString().PadLeft(10, '0') + " " + "00000" + " " + "n " + "\n";
+            }
+            _buffers.Add(table);
 
-            //_buffers.Add("startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF\n");
+
+            // trailer
+            String trailer = String.Empty;
+            trailer += "trailer" + "\n" + "\n";
+            trailer += "<<" + "\n";
+            trailer += "/Root " + catalog.GetRefStr() + "\n";
+            trailer += "/Size " + (_buffers.Count - 1).ToString() + "\n";
+            trailer += ">>" + "\n";
+            _buffers.Add(trailer);
+
+            _buffers.Add("startxref" + "\n" + _offset.ToString() + "\n" + "%%EOF\n");
         }
 
         public void Save(String path)
