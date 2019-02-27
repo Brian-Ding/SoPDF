@@ -8,14 +8,37 @@ namespace SoPDF.Core.Objects
 {
     internal class PdfPageTree : PdfObject
     {
-        private List<PdfPage> _pages;
+        #region Singleton
 
-        public PdfPageTree() : base()
+        private static PdfPageTree _pdfPageTree;
+        private static Object _object = new Object();
+
+        private PdfPageTree() : base()
         {
             _pages = new List<PdfPage>();
         }
 
-        public override String ToPDF()
+        internal static PdfPageTree GetPdfPageTree()
+        {
+            if (_pdfPageTree == null)
+            {
+                lock (_object)
+                {
+                    if (_pdfPageTree == null)
+                    {
+                        _pdfPageTree = new PdfPageTree();
+                    }
+                }
+            }
+
+            return _pdfPageTree;
+        }
+
+        #endregion
+
+        private List<PdfPage> _pages;
+
+        public override Byte[] ToPDF()
         {
             String pdf = String.Empty;
 
@@ -38,7 +61,7 @@ namespace SoPDF.Core.Objects
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return pdf;
+            return Encoding.UTF8.GetBytes(pdf);
         }
 
         public void AddPage(PdfPage page)

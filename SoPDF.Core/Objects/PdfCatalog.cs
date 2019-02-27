@@ -8,14 +8,32 @@ namespace SoPDF.Core.Objects
 {
     internal class PdfCatalog : PdfObject
     {
-        private PdfPageTree _pageTree;
+        #region Singleton
 
-        public PdfCatalog(PdfPageTree pageTree) : base()
+        private static Object _object = new Object();
+        private static PdfCatalog _pdfCatalog;
+
+        private PdfCatalog() : base() { }
+
+        internal static PdfCatalog GetPdfCatalog()
         {
-            _pageTree = pageTree;
+            if (_pdfCatalog == null)
+            {
+                lock (_object)
+                {
+                    if (_pdfCatalog == null)
+                    {
+                        _pdfCatalog = new PdfCatalog();
+                    }
+                }
+            }
+
+            return _pdfCatalog;
         }
 
-        public override String ToPDF()
+        #endregion
+
+        public override Byte[] ToPDF()
         {
             String pdf = String.Empty;
 
@@ -26,7 +44,7 @@ namespace SoPDF.Core.Objects
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return pdf;
+            return Encoding.UTF8.GetBytes(pdf);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace SoPDF.Core.Objects
             _content = content;
         }
 
-        public override String ToPDF()
+        public override Byte[] ToPDF()
         {
             String stream = String.Empty;
             stream += "BT" + "\n";
@@ -36,7 +36,7 @@ namespace SoPDF.Core.Objects
             pdf += "endstream " + "\n";
             pdf += "endobj " + "\n";
 
-            return pdf;
+            return Encoding.UTF8.GetBytes(pdf);
         }
     }
 }

@@ -13,13 +13,14 @@ namespace SoPDF.Core.Objects
         public Int32 ObjectNum { get; protected set; }
         public Int32 GenerationNum { get; protected set; }
 
+        // this is a constructor
         public PdfObject()
         {
             ObjectNum = ++_objectNum;
             GenerationNum = 0;
         }
 
-        public virtual String ToPDF()
+        public virtual Byte[] ToPDF()
         {
             throw new NotImplementedException();
         }
