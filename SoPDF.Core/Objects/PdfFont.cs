@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoPDF.Core.Objects
 {
-    internal class PdfFont : PdfObject
+    public class PdfFont : PdfObject
     {
         private String _font;
         private String _type;
@@ -17,7 +17,7 @@ namespace SoPDF.Core.Objects
             _type = "Type1";
         }
 
-        public override Byte[] ToPDF()
+        public override string ToPDF()
         {
             String pdf = String.Empty;
 
@@ -35,7 +35,7 @@ namespace SoPDF.Core.Objects
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            return pdf;
         }
     }
 }

@@ -33,18 +33,18 @@ namespace SoPDF.Core.Objects
 
         #endregion
 
-        public override Byte[] ToPDF()
+        public override string ToPDF()
         {
             String pdf = String.Empty;
 
             pdf += ObjectNum.ToString() + " " + GenerationNum.ToString() + " obj " + "\n";
             pdf += "<<" + "\n";
-            pdf += "/Pages " + _pageTree.GetRefStr() + "\n";
+            pdf += "/Pages " + PdfPageTree.GetPdfPageTree().GetRefStr() + "\n";
             pdf += "/Type /Catalog" + "\n";
             pdf += ">>" + "\n";
             pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            return pdf;
         }
     }
 }

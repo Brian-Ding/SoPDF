@@ -57,7 +57,7 @@ namespace SoPDF.Core.Utilities
             Int32 offset = 0;
             for (Int32 i = 0; i < _pdfObjects.Count; i++)
             {
-                bytes[i] = _pdfObjects[i].ToPDF();
+                bytes[i] = Encoding.UTF8.GetBytes(_pdfObjects[i].ToPDF());
                 offset += bytes[i].Length;
                 _refTable.Add(offset);
             }

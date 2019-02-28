@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SoPDF.Core.Objects
 {
-    internal class PdfStream : PdfObject
+    public class PdfStream : PdfObject
     {
         private String _content;
 
@@ -15,7 +15,7 @@ namespace SoPDF.Core.Objects
             _content = content;
         }
 
-        public override Byte[] ToPDF()
+        public override string ToPDF()
         {
             String stream = String.Empty;
             stream += "BT" + "\n";
@@ -36,7 +36,7 @@ namespace SoPDF.Core.Objects
             pdf += "endstream " + "\n";
             pdf += "endobj " + "\n";
 
-            return Encoding.UTF8.GetBytes(pdf);
+            return pdf;
         }
     }
 }
